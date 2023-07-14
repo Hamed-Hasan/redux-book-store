@@ -6,9 +6,11 @@ import Strength from '../components/Strength/Strength';
 import CountOurNumbers from '../components/CountOurNumbers/CountOurNumbers';
 import Benefits from '../components/Benefites/Benefits';
 import Footer from '../layouts/Footer';
+import CounterComponent from '../redux/CounterComponent';
 const Home = () => {
     return (
         <div>
+            <CounterComponent/>
             <Banner/>
             <Faciliteis/>
             <CorporateClient/>
