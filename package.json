@@ -13,6 +13,8 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@reduxjs/toolkit": "^1.9.5",
+    "@types/firebase": "^3.2.1",
+    "firebase": "^10.0.0",
     "react": "^18.2.0",
     "react-countup": "^6.4.2",
     "react-dom": "^18.2.0",
