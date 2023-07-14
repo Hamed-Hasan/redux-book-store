@@ -9,7 +9,7 @@ import Footer from '../layouts/Footer';
 const Home = () => {
     return (
         <div>
-         
+     
             <Banner/>
             <Faciliteis/>
             <CorporateClient/>

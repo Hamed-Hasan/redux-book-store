@@ -1,17 +1,54 @@
-import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import bagsq from "../Images/BagsQ.png";
-import CustomLink from "../CustomLink/CustomLink";
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import bagsq from '../Images/BagsQ.png';
+import CustomLink from '../CustomLink/CustomLink';
+import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { setUser } from '../redux/features/users/userSlice';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
+import { auth } from '../utils/firebase';
+
 const Navbar = () => {
   const [userClicked, setUserClicked] = useState(false);
   const [menuClicked, setMenuClicked] = useState(false);
+  const navigate = useNavigate();
+  const { user } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+  const [authenticated, setAuthenticated] = useState(false); // Track authentication status
 
+  const handleLogout = () => {
+    console.log('Logout');
+    signOut(auth)
+      .then(() => {
+        // Sign-out successful.
+        dispatch(setUser(null));
+        navigate('/login');
+      })
+      .catch((error) => {
+        console.error('Logout error:', error);
+      });
+  };
 
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
+      if (userAuth) {
+        // User is logged in
+        dispatch(setUser(userAuth));
+        setAuthenticated(true);
+      } else {
+        // User is logged out
+        dispatch(setUser(null));
+        setAuthenticated(false);
+      }
+    });
+
+    return () => {
+      unsubscribe();
+    };
+  }, [dispatch]);
   return (
     <nav className="bg-white shadow-md border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 sticky top-0 z-50">
       <div className="flex justify-evenly items-center mx-auto">
         {/*------------------- logo ---------------------*/}
-
         <div className="lg:w-[20%] w-[70%]">
           <Link to="/" className="inline mr-0 w-1/3">
             <span className="self-center font-extrabold text-xl whitespace-nowrap dark:text-white">
@@ -20,41 +57,38 @@ const Navbar = () => {
           </Link>
         </div>
         <div className="flex items-center md:order-2">
-          <button
-            type="button"
-            className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="dropdown"
-          >
-            <span className="sr-only">Open user menu</span>
-            {/* <img
-              className="w-8 h-8 rounded-full"
-              onClick={() => setUserClicked(!userClicked)}
-              src={user?.photoURL ? user?.photoURL : userImage}
-              alt=""
-            /> */}
-          </button>
+        {!authenticated ? (
+            <Link to="/login">
+              <button className="px-4 py-2 text-sm text-white bg-[#4FA9E3] rounded-md hover:bg-[#00B3FF]">
+                Login
+              </button>
+            </Link>
+          ) : (
+            <button
+              className="px-4 py-2 text-sm text-white bg-red-600 rounded-md hover:bg-red-700"
+              onClick={handleLogout}
+            >
+              Logout
+            </button>
+          )}
 
           {/*--------------------------- user image navigation ------------------------------*/}
-
           <div
             className={`z-50 my-4 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 ${
-              userClicked ? "flex" : "hidden"
+              userClicked ? 'flex' : 'hidden'
             }`}
             id="dropdown"
             data-popper-reference-hidden=""
             data-popper-escaped=""
             data-popper-placement="top"
             style={{
-              position: " absolute",
-              top: "100%",
-              right: "3%",
-              margin: " 0px",
+              position: ' absolute',
+              top: '100%',
+              right: '3%',
+              margin: ' 0px',
             }}
           >
             <div>
-              
               <ul className="py-1" aria-labelledby="dropdown">
                 <li>
                   <CustomLink
@@ -64,7 +98,6 @@ const Navbar = () => {
                     Dashboard
                   </CustomLink>
                 </li>
-             
               </ul>
             </div>
           </div>
@@ -108,12 +141,11 @@ const Navbar = () => {
         </div>
 
         {/*--------------------------- Header navigation ------------------------------*/}
-
         <div
           className={`${
-            menuClicked ? "block absolute bg-white top-14" : "hidden"
-          } justify-between items-center w-full md:flex md:w-auto md:order-1"
-          id="mobile-menu-2 z-50 px-5 leading-9`}
+            menuClicked ? 'block absolute bg-white top-14' : 'hidden'
+          } justify-between items-center w-full md:flex md:w-auto md:order-1`}
+          id="mobile-menu-2 z-50 px-5 leading-9"
         >
           <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
             <li>
@@ -141,8 +173,6 @@ const Navbar = () => {
                 Add Inventory
               </CustomLink>
             </li>
-           
-
             <li>
               <CustomLink
                 to="/blogs"
@@ -159,7 +189,6 @@ const Navbar = () => {
                 About
               </CustomLink>
             </li>
-       
           </ul>
         </div>
       </div>

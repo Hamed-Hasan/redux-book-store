@@ -6,6 +6,7 @@ import MainLayout from './layouts/MainLayout'
 import { setLoading, setUser } from './redux/features/users/userSlice';
 import { useAppDispatch } from './redux/hook';
 import { auth } from './utils/firebase';
+// import { Toaster } from 'react-hot-toast';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -23,9 +24,13 @@ function App() {
       }
     });
   }, [dispatch]);
+
   return (
     <>
+          
+
      <MainLayout/>
+     {/* <Toaster position="top-center" /> */}
     </>
   )
 }
