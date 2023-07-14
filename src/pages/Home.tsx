@@ -5,6 +5,7 @@ import CorporateClient from '../components/CorporateClient/CorporateClient'
 import Strength from '../components/Strength/Strength';
 import CountOurNumbers from '../components/CountOurNumbers/CountOurNumbers';
 import Benefits from '../components/Benefites/Benefits';
+import Footer from '../layouts/Footer';
 const Home = () => {
     return (
         <div>
@@ -15,6 +16,7 @@ const Home = () => {
             <Strength/>
             <CountOurNumbers/>
             <Benefits/>
+            <Footer/>
         </div>
     );
 };
