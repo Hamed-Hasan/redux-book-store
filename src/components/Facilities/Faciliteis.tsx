@@ -1,14 +1,14 @@
 
 import { Link } from "react-router-dom";
 import { Slide, LightSpeed } from "react-reveal";
-import truck from "../../Images/truck.jpg";
+import truck from "../../Images/bookMan.jpg";
 
 const Faciliteis = () => {
   return (
     <div className="bg-white w-full lg:flex block justify-center items-center py-24">
       <Slide left>
         <div className="mb-10">
-          <img src={truck} alt="" />
+          <img className="md:w-96" src={truck} alt="" />
         </div>
       </Slide>
       <LightSpeed right>
