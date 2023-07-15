@@ -19,6 +19,7 @@ interface Book {
 const BookDetails: React.FC = () => {
   const { id } = useParams<BookDetailsParams>();
   const navigate = useNavigate();
+
   const [book, setBook] = useState<Book | null>(null);
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const BookDetails: React.FC = () => {
 <Link to={`/books/${book?._id}/edit`}>Edit</Link>
  
       <button onClick={handleDelete}>Delete Book</button>
-      <ReviewForm />
+      {/* <ReviewForm bookId={id}/> */}
     </div>
   );
 };
