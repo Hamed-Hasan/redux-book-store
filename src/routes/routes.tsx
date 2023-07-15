@@ -4,6 +4,11 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
 
+import BookList from '../components/books/BookList';
+import BookDetails from '../components/books/BookDetails';
+import AddNewBook from '../components/books/AddNewBook';
+import EditBook from '../components/books/EditBook';
+
 
 
 
@@ -19,12 +24,20 @@ const routes = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/products',
-        // element: <Products />,
+        path: '/books',
+        element: <BookList />,
       },
       {
-        path: '/product-details/:id',
-        // element: <ProductDetails />,
+        path: '/books/:id',
+        element: <BookDetails />,
+      },
+      {
+        path: '/books/add-new',
+        element: <AddNewBook />,
+      },
+      {
+        path: '/books/:id/edit',
+        element: <EditBook />,
       },
       {
         path: '/checkout',
