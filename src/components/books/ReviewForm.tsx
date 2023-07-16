@@ -10,20 +10,26 @@ interface Comment {
 interface ReviewFormProps {
   bookId: string;
 }
+interface ReviewFormProps {
+  bookId: string;
+  onSubmit: (commentValue: string) => void;
+}
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ bookId }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ bookId, onSubmit }) => {
   const [commentValue, setCommentValue] = useState('');
   const { data: comments, isError, isLoading } = useGetCommentsQuery(bookId);
   const [addComment] = useAddCommentMutation();
 
   const handleSubmitComment = () => {
-    if (commentValue.trim() === '') return;
+    if (commentValue.trim() === '') {
+      return;
+    }
 
     addComment({ bookId, comment: commentValue })
       .then(() => {
         setCommentValue('');
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Failed to add comment:', error);
       });
   };
@@ -83,11 +89,21 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ bookId }) => {
       </form>
 
       <div className="mt-10">
-        {commentArray.map((comment: Comment) => (
-          <div key={comment._id} className="flex gap-3 items-center mb-5">
-            <p>{comment.comment}</p>
-          </div>
-        ))}
+      <div className="mt-10">
+      
+      {/* {commentArray.map((comment: Comment, index: number, array: Comment[]) => (
+        <div key={comment._id} className="flex gap-3 items-center mb-5">
+          <p>{comment.comment}</p>
+        </div>
+      ))} */}
+
+</div>
+
+
+
+
+
+
       </div>
     </div>
   );

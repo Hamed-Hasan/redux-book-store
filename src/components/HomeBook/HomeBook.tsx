@@ -1,9 +1,9 @@
-import React from 'react';
+
 import { useFetchBooksQuery } from '../../api/booksApi';
 import { Link } from 'react-router-dom';
 
 const HomeBook = () => {
-  const { data: bookData = [], isLoading, isError } = useFetchBooksQuery();
+  const { data: bookData = []} = useFetchBooksQuery();
   const randomBooks = bookData.slice(0, 3); // Get random three books from the book data
 
   return (
@@ -41,7 +41,7 @@ const HomeBook = () => {
       <div className="mx-auto w-36 mt-11 items-center justify-between">
         <Link
           to="/books"
-          href="#"
+          
           className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           See All Books

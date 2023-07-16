@@ -33,12 +33,12 @@ export const booksApi = createApi({
         method: 'POST',
         body: { comment },
       }),
-      invalidatesTags: ['Comments'],
+      // invalidatesTags: ['Comments'],
     }),
     getComments: builder.query<Comment[], string>({
       query: (bookId) => `/comment/${bookId}`,
-      cacheTime: 10000,
-      providesTags: ['Comments'],
+      // cacheTime: 10000,
+      // providesTags: ['Comments'],
     }),
   }),
 });

@@ -1,4 +1,8 @@
+import { Key } from "react";
+
 export interface Book {
+    _id: Key | null | undefined;
+    image: string | undefined;
     id: string;
     title: string;
     author: string;

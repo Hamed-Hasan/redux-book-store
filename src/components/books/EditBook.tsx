@@ -7,6 +7,7 @@ import 'sweetalert2/dist/sweetalert2.css';
 
 interface BookDetailsParams {
   id: string;
+  [key: string]: string | undefined;
 }
 
 const EditBook: React.FC = () => {

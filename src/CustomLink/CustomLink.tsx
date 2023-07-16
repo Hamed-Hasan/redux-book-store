@@ -1,11 +1,15 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Link, useMatch, useResolvedPath } from "react-router-dom";
 
-const CustomLink = ({ children, to, ...props }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
-  let resolved = useResolvedPath(to);
-  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
-  let match = useMatch({ path: resolved.pathname, end: true });
+interface CustomLinkProps {
+  children: ReactNode;
+  to: string;
+  className?: string;
+}
+
+const CustomLink = ({ children, to, className, ...props }: CustomLinkProps) => {
+  const resolved = useResolvedPath(to);
+  const match = useMatch({ path: resolved.pathname, end: true });
 
   return (
     <div>
@@ -17,6 +21,7 @@ const CustomLink = ({ children, to, ...props }) => {
           borderRadius: "10px",
         }}
         to={to}
+        className={className}
         {...props}
       >
         {children}

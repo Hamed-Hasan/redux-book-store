@@ -1,43 +1,61 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
-import { RootState } from 'path/to/redux/store'; // Replace with the actual path
+// import { RootState } from '@/redux/store';
+// import { useSelector } from 'react-redux';
 
-const Wishlist = () => {
-  const wishlist = useSelector((state: RootState) => state.wishlist.books);
-  const books = useSelector((state: RootState) => state.books); // Assuming you have a books slice in your Redux store
 
-  // Function to get book details from the book ID
-  const getBookDetails = (bookId) => {
-    return books?.find((book) => book._id === bookId);
-  };
+// const Wishlist = () => {
+//   const wishlist = useSelector((state: RootState) => state.wishlist.books);
+//   const books = useSelector((state: RootState) => state.books); // Assuming you have a books slice in your Redux store
+
+//   // Function to get book details from the book ID
+//   const getBookDetails = (bookId: string) => {
+//     return books?.find((book: { _id: string; }) => book._id === bookId);
+//   };
   
 
-  // Function to render the list of books in the wishlist
-  const renderWishlist = () => {
-    console.log(wishlist);
-  console.log(books);
-    return wishlist?.map((bookId) => {
-      const book = getBookDetails(bookId);
-      return (
-        <div key={book?._id}>
-          <h3>{book?.title}</h3>
-          <p>{book?.author}</p>
-          {/* Add other book details as needed */}
-        </div>
-      );
-    });
-  };
+//   const renderWishlist = () => {
+//     console.log(wishlist);
+//     console.log(books);
+    
+//     return wishlist?.map((bookId) => {
+//       const book = getBookDetails(bookId);
+  
+//       // Type assertion to specify the expected type of 'book'
+//       const typedBook = book as { title: string; author: string; _id: string };
+  
+//       return (
+//         <div key={typedBook?._id}>
+//           <h3>{typedBook?.title}</h3>
+//           <p>{typedBook?.author}</p>
+//           {/* Add other book details as needed */}
+//         </div>
+//       );
+//     });
+//   };
+  
 
+//   return (
+//     <div>
+//       <h2>My Wishlist</h2>
+//       {wishlist.length > 0 ? (
+//         renderWishlist()
+//       ) : (
+//         <p>Your wishlist is empty.</p>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default Wishlist;
+
+
+
+
+const wishlist = () => {
   return (
     <div>
-      <h2>My Wishlist</h2>
-      {wishlist.length > 0 ? (
-        renderWishlist()
-      ) : (
-        <p>Your wishlist is empty.</p>
-      )}
+      
     </div>
   );
 };
 
-export default Wishlist;
+export default wishlist;

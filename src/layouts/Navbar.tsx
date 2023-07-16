@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import bagsq from '../Images/BagsQ.png';
 import CustomLink from '../CustomLink/CustomLink';
-import { useAppDispatch, useAppSelector } from '../redux/hook';
+import { useAppDispatch } from '../redux/hook';
 import { setUser } from '../redux/features/users/userSlice';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../utils/firebase';
 
 const Navbar = () => {
-  const [userClicked, setUserClicked] = useState(false);
+  const [userClicked] = useState(false);
   const [menuClicked, setMenuClicked] = useState(false);
   const navigate = useNavigate();
-  const { user } = useAppSelector((state) => state.user);
+  // const { user } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
   const [authenticated, setAuthenticated] = useState(false); // Track authentication status
 
@@ -32,7 +32,7 @@ const Navbar = () => {
     const unsubscribe = onAuthStateChanged(auth, (userAuth) => {
       if (userAuth) {
         // User is logged in
-        dispatch(setUser(userAuth));
+        dispatch(setUser(userAuth.email));
         setAuthenticated(true);
       } else {
         // User is logged out
@@ -40,11 +40,12 @@ const Navbar = () => {
         setAuthenticated(false);
       }
     });
-
+  
     return () => {
       unsubscribe();
     };
   }, [dispatch]);
+  
   return (
     <nav className="bg-white shadow-md border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-800 sticky top-0 z-50">
       <div className="flex justify-evenly items-center mx-auto">
@@ -82,11 +83,12 @@ const Navbar = () => {
             data-popper-escaped=""
             data-popper-placement="top"
             style={{
-              position: ' absolute',
+              position: 'absolute',
               top: '100%',
               right: '3%',
-              margin: ' 0px',
+              margin: '0px',
             }}
+            
           >
             <div>
               <ul className="py-1" aria-labelledby="dropdown">

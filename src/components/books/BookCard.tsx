@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 
 interface BookCardProps {
   book: {
+    _id: unknown;
     title: string;
     author: string;
     genre: string;

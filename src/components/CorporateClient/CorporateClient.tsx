@@ -1,4 +1,4 @@
-import React from "react";
+
 import "./CorporateClient.css";
 import rei from "../../Images/companies/rei.png";
 import arcTeryx from "../../Images/companies/arc-teryx.png";
@@ -8,7 +8,7 @@ import kelty from "../../Images/companies/kelty.png";
 import marmot from "../../Images/companies/marmot.png";
 import northFace from "../../Images/companies/north-face.png";
 import ospray from "../../Images/companies/ospray.png";
-import { Zoom } from "react-reveal";
+
 
 import "swiper/css";
 import "swiper/css/pagination";
@@ -28,7 +28,7 @@ const InstallApp = () => {
         </span>
       </div>
 
-      <Zoom bottom cascade>
+      <>
         <div className="companies mt-5 mb-10">
           <Swiper
             slidesPerView={4}
@@ -106,7 +106,7 @@ const InstallApp = () => {
           
           
         */}
-      </Zoom>
+      </>
     </div>
   );
 };

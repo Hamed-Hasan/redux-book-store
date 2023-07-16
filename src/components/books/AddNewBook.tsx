@@ -9,7 +9,7 @@ const AddNewBook = () => {
   const [publicationDate, setPublicationDate] = useState('');
   const [imageUrl, setImageUrl] = useState('');
 
-  const handleFormSubmit = async (event) => {
+  const handleFormSubmit = async (event: { preventDefault: () => void; }) => {
     event.preventDefault();
 
     try {

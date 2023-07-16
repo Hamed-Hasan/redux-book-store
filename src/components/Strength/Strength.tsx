@@ -1,17 +1,17 @@
 
 import strength from "../../Images/strength.png";
-import { Slide } from "react-reveal";
+
 import "./Strength.css";
 import { AiOutlineCheck } from 'react-icons/ai';
 const Strength = () => {
   return (
     <div className="bg-white w-full block lg:flex justify-center items-center py-14">
-      <Slide left>
+      <>
         <div className=" w-full lg:w-1/3 px-2">
           <img src={strength} alt="" />
         </div>
-      </Slide>
-      <Slide right>
+      </>
+      <>
         <div className="lg:w-[60ch] px-4">
           <h2 className="font-[Nunito] text-4xl font-extrabold my-5 text-blue-900">
             Our <span className="text-blue-500">Strength</span>
@@ -59,7 +59,7 @@ const Strength = () => {
             <p>Technician Productivity Tracking</p>
           </div>
         </div>
-      </Slide>
+      </>
     </div>
   );
 };

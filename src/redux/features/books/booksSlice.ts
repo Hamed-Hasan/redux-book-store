@@ -1,9 +1,10 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Book } from '../../../types/bookTypes';
 import { RootState } from '../../store';
-import { useSearchBooksQuery } from '../../../api/booksApi';
+import { useFetchBooksQuery, useSearchBooksQuery } from '../../../api/booksApi';
 
 interface BooksState {
+  find: unknown;
   books: Book[];
   loading: boolean;
   error: string | null;
@@ -15,13 +16,15 @@ const initialState: BooksState = {
   loading: false,
   error: null,
   searchResults: [],
+  find: undefined
 };
 
 export const fetchBooks = createAsyncThunk('books/fetchBooks', async () => {
-  const response = await useFetchBooksQuery().unwrap();
+  const response = await useFetchBooksQuery()
   return response;
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export const searchBooks = (searchTerm: string) => async (dispatch: any, getState: () => RootState) => {
   try {
     const response = await dispatch(useSearchBooksQuery(searchTerm)).unwrap();
@@ -37,12 +40,14 @@ const booksSlice = createSlice({
   reducers: {
     filterBooksByGenre: (state, action: PayloadAction<string>) => {
       const genre = action.payload;
-      state.books = state.books.filter((book) => book.genre === genre);
+      state.books = state.books.filter((book: { genre: string; }) => {
+        return book.genre === genre;
+      });
     },
-    filterBooksByYear: (state, action: PayloadAction<number>) => {
-      const year = action.payload;
-      state.books = state.books.filter((book) => book.publicationYear === year);
-    },
+    // filterBooksByYear: (state, action: PayloadAction<number>) => {
+    //   const year = action.payload;
+    //   state.books = state.books.filter((book: { publicationYear: number; }) => book.publicationYear === year);
+    // },
     setSearchResults: (state, action: PayloadAction<Book[]>) => {
       state.searchResults = action.payload;
     },
@@ -57,10 +62,17 @@ const booksSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchBooks.fulfilled, (state, action) => {
-        state.books = action.payload;
+        if (Array.isArray(action.payload)) {
+          state.books = action.payload;
+        } else {
+          // Handle the case when the payload is not an array
+          // Set state.books to an empty array or handle the error condition accordingly
+          state.books = [];
+          state.error = 'Invalid payload';
+        }
         state.loading = false;
-        state.error = null;
       })
+      
       .addCase(fetchBooks.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch books';
@@ -76,7 +88,7 @@ export const selectSearchResults = (state: RootState) => state.books.searchResul
 
 export const {
   filterBooksByGenre,
-  filterBooksByYear,
+  // filterBooksByYear,
   setSearchResults,
   addBook,
 } = booksSlice.actions;

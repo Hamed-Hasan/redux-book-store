@@ -1,14 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { booksApi } from '../api/booksApi';
-import wishlistReducer from './features/wishlist/wishlistSlice';
+// import wishlistReducer from './features/wishlist/wishlistSlice';
 import userReducer from './features/users/userSlice';
-// import booksReducer from './features/books/booksSlice'; // Replace with the actual path
+import booksReducer from './features/books/booksSlice'; // Replace with the actual path
 
 const store = configureStore({
   reducer: {
     user: userReducer,
     // wishlist: wishlistReducer,
-    // books: booksReducer,
+    books: booksReducer,
 
     [booksApi.reducerPath]: booksApi.reducer,
   },

@@ -1,16 +1,20 @@
 /* eslint-disable @typescript-eslint/no-floating-promises */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
-import React, { useState } from 'react';
+import  { useState } from 'react';
 import { useAppDispatch } from '../../redux/hook';
 import { createUser, setLoading } from '../../redux/features/users/userSlice';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { auth } from '../../utils/firebase';
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
+interface ICredential {
+  email: string | null;
+  // other properties
+}
 
 const Social = () => {
-  const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage] = useState('');
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -21,17 +25,17 @@ const Social = () => {
       const provider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, provider);
   
-      if (result.user) {
+      if (result.user && result.user.email !== null) {
         const { email } = result.user;
         dispatch(createUser({ email, password: '' }));
-        navigate('/'); // Navigate to the home page after successful login
+        navigate('/');
       }
+      
   
       dispatch(setLoading(false));
       toast.success('Google signup successful!');
     } catch (error) {
       dispatch(setLoading(false));
-      console.log('Google signup error:', error.message);
       toast.error('Error occurred during Google signup. Please try again.');
     }
   };

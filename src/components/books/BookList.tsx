@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import BookCard from './BookCard';
 import { getAllBooks } from '../../utils/api';
 import SearchBar from './SearchBar';
 import FilterOptions from './FilterOptions';
 import Loading from '../../shared/Loading/Loading';
 
+interface Book {
+  _id: string;
+  title: string;
+  author: string;
+  genre: string;
+  publicationDate: string;
+  image: string;
+  // Other properties
+}
+
 const BookList = () => {
-  const [books, setBooks] = useState([]);
-  const [filteredBooks, setFilteredBooks] = useState([]);
+  const [books, setBooks] = useState<Book[]>([]);
+  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
@@ -22,6 +32,7 @@ const BookList = () => {
 
   useEffect(() => {
     filterBooks();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [books, selectedGenre, currentPage]);
 
 
@@ -60,7 +71,7 @@ const BookList = () => {
     setCurrentPage(1);
   };
 
-  const handlePrevPage = (event) => {
+  const handlePrevPage = (event: { preventDefault: () => void; }) => {
     event.preventDefault(); // Prevent navigation when the button is clicked
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
@@ -97,9 +108,9 @@ const BookList = () => {
   
     for (let page = startPage; page <= endPage; page++) {
       pageButtons.push(
-        <a
+        <button
           key={page}
-          href="#"
+          
           onClick={() => setCurrentPage(page)}
           className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
             page === currentPage ? 'bg-[#52ABE4] text-blue-100' : ''}` +
@@ -108,7 +119,7 @@ const BookList = () => {
           }
         >
           {page}
-        </a>
+        </button>
       );
     }
   
@@ -144,31 +155,35 @@ const BookList = () => {
 
       <div className="max-w-2xl mx-auto my-9">
         <nav aria-label="Page navigation example">
-          <ul className="inline-flex -space-x-px">
+          <ul className="flex items-center justify-center -space-x-px">
             <li>
-              <a
-                href="#"
-                className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                  currentPage === 1 ? 'cursor-not-allowed' : ''
-                }`}
-                onClick={handlePrevPage}
-                disabled={currentPage === 1}
-              >
-                Previous
-              </a>
+           <button
+  className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+    currentPage === 1 ? 'cursor-not-allowed' : ''
+  }`}
+  onClick={handlePrevPage}
+  disabled={currentPage === 1}
+>
+  Previous
+</button>
+
             </li>
-            <li>{getPageButtons()}</li>
             <li>
-              <a
-                href="#"
-                className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-                  currentPage === totalPages || totalPages === 0 ? 'cursor-not-allowed' : ''
-                }`}
-                onClick={handleNextPage}
-                disabled={currentPage === totalPages || totalPages === 0}
-              >
-                Next
-              </a>
+              <button>
+              {getPageButtons()}
+              </button>
+            </li>
+            <li>
+            <button
+            className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+              currentPage === totalPages || totalPages === 0 ? 'cursor-not-allowed' : ''
+            }`}
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages || totalPages === 0}
+          >
+            Next
+          </button>
+
             </li>
           </ul>
         </nav>

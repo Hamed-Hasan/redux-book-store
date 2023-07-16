@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { Slide } from "react-reveal";
+
 
 const Footer = () => {
-    const [date, setDate] = useState(new Date());
+    const [date] = useState(new Date());
 
   return (
     <>
-      <Slide bottom>
+     
         <footer className="bg-gray-800">
           <div className="grid grid-cols-2 gap-8 py-8 px-6 md:grid-cols-4">
             <div>
@@ -192,7 +192,7 @@ const Footer = () => {
             </div>
           </div>
         </footer>
-      </Slide>
+  
     </>
   );
 };

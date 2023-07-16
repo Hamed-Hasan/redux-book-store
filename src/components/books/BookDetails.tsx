@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import ReviewForm from './ReviewForm';
@@ -11,9 +11,6 @@ import { AiOutlineDelete,AiOutlineEdit } from 'react-icons/ai';
 import Swal from 'sweetalert2';
 import Loading from '../../shared/Loading/Loading';
 // import withReactContent from 'sweetalert2-react-content';
-interface BookDetailsParams {
-  id: string;
-}
 
 interface Book {
   _id: string;
@@ -26,13 +23,18 @@ interface Book {
 
 interface Comment {
   _id: string;
-  comment: string;
+  content: string;
+}
+
+interface BookDetailsParams {
+  id: string;
+  [key: string]: string | undefined;
 }
 
 const BookDetails: React.FC = () => {
-  const { id } = useParams<BookDetailsParams>();
+  const { id = '' } = useParams<BookDetailsParams>();
   const navigate = useNavigate();
-
+  
   const [book, setBook] = useState<Book | null>(null);
   const { data: comments, isError, isLoading } = useGetCommentsQuery(id);
   const [addComment] = useAddCommentMutation();
@@ -76,14 +78,16 @@ const handleDelete = () => {
 
 
   const handleSubmitComment = (commentValue: string) => {
-    if (commentValue.trim() === '') return;
+    if (commentValue.trim() === '') {
+      return;
+    }
 
     addComment({ bookId: id, comment: commentValue }) // Pass bookId in the request body
       .unwrap()
       .then(() => {
         // Comment added successfully, you can handle any additional logic here
       })
-      .catch((error) => {
+      .catch((error: unknown) => {
         console.error('Failed to add comment:', error);
       });
   };
@@ -128,13 +132,17 @@ const handleDelete = () => {
             </div>
           </div>
         </div>
-        <ReviewForm onSubmit={handleSubmitComment} />
+        <ReviewForm bookId={id} onSubmit={handleSubmitComment} />
         <div>
         <h3>Review:</h3>
-        {comments &&
-          comments.map((comment: Comment) => (
-            <p key={comment._id}>{comment?.content}</p>
-          ))}
+        {/* {comments &&
+  comments.map((comment: Comment) => {
+    return (
+      <p key={comment._id}>{comment.content}</p>
+    );
+  })} */}
+
+
       </div>
       </div>
       
