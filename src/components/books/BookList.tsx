@@ -3,6 +3,7 @@ import BookCard from './BookCard';
 import { getAllBooks } from '../../utils/api';
 import SearchBar from './SearchBar';
 import FilterOptions from './FilterOptions';
+import Loading from '../../shared/Loading/Loading';
 
 const BookList = () => {
   const [books, setBooks] = useState([]);
@@ -10,6 +11,8 @@ const BookList = () => {
   const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // Added loading state
+
   const itemsPerPage = 6;
   const pageRange = 3; // Number of buttons to show in the middle
 
@@ -21,13 +24,20 @@ const BookList = () => {
     filterBooks();
   }, [books, selectedGenre, currentPage]);
 
+
+
   const fetchBooks = async () => {
     try {
+      setIsLoading(true); // Start loading
+
       const booksData = await getAllBooks();
       setBooks(booksData);
       setCurrentPage(1);
+
+      setIsLoading(false); // Stop loading
     } catch (error) {
       console.error('Error fetching books:', error);
+      setIsLoading(false); // Stop loading in case of error
     }
   };
 
@@ -84,7 +94,7 @@ const BookList = () => {
     const pageButtons = [];
     const startPage = Math.max(currentPage - pageRange, 1);
     const endPage = Math.min(currentPage + pageRange, totalPages);
-
+  
     for (let page = startPage; page <= endPage; page++) {
       pageButtons.push(
         <a
@@ -92,17 +102,23 @@ const BookList = () => {
           href="#"
           onClick={() => setCurrentPage(page)}
           className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-            page === currentPage ? 'bg-blue-50 text-blue-600' : ''
-          }`}
+            page === currentPage ? 'bg-[#52ABE4] text-blue-100' : ''}` +
+            `${page === currentPage && page === startPage ? 'rounded-l-md' : ''}` +
+            `${page === currentPage && page === endPage ? 'rounded-r-md' : ''}`
+          }
         >
           {page}
         </a>
       );
     }
-
+  
     return pageButtons;
   };
-
+  
+  
+  if(isLoading){
+    return <Loading/>
+  }
   return (
     <div>
       <SearchBar onSearch={handleSearch} />

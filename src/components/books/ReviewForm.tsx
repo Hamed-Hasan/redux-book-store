@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useAddCommentMutation, useGetCommentsQuery } from '../../api/booksApi';
+import Loading from '../../shared/Loading/Loading';
 
 interface Comment {
   _id: string;
@@ -28,7 +29,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ bookId }) => {
   };
 
   if (isLoading) {
-    return <p>Loading comments...</p>;
+    return <p><Loading/></p>;
   }
 
   if (isError) {

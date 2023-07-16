@@ -7,7 +7,7 @@ const HomeBook = () => {
   const randomBooks = bookData.slice(0, 3); // Get random three books from the book data
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto" id='books'>
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">
         Featured Books
       </h2>

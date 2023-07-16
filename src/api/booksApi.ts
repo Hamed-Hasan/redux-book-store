@@ -3,7 +3,7 @@ import { Book } from '../types/bookTypes';
 
 export const booksApi = createApi({
   reducerPath: 'booksApi',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/' }),
+  baseQuery: fetchBaseQuery({ baseUrl: 'https://redux-book-store-server.vercel.app/' }),
   endpoints: (builder) => ({
     fetchBooks: builder.query<Book[], void>({
       query: () => 'books',

@@ -1,7 +1,7 @@
 // api.ts
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:5000'; // Replace with your API base URL
+const BASE_URL = 'https://redux-book-store-server.vercel.app'; // Replace with your API base URL
 
 export const getAllBooks = async () => {
   try {

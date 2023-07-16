@@ -9,6 +9,7 @@ import {
 } from '../../api/booksApi';
 import { AiOutlineDelete,AiOutlineEdit } from 'react-icons/ai';
 import Swal from 'sweetalert2';
+import Loading from '../../shared/Loading/Loading';
 // import withReactContent from 'sweetalert2-react-content';
 interface BookDetailsParams {
   id: string;
@@ -40,7 +41,7 @@ const BookDetails: React.FC = () => {
   useEffect(() => {
     const fetchBookDetails = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/books/${id}`);
+        const response = await axios.get(`https://redux-book-store-server.vercel.app/books/${id}`);
         setBook(response.data);
       } catch (error) {
         console.error('Error fetching book details:', error);
@@ -88,7 +89,7 @@ const handleDelete = () => {
   };
 
   if (!book || isLoading) {
-    return <div>Loading...</div>;
+    return <div><Loading/></div>;
   }
 
   if (isError) {

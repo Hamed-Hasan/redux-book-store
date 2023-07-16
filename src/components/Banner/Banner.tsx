@@ -10,7 +10,7 @@ const Banner = () => {
         <div className="inside-banner px-5">
           <Zoom top>
             <h1>Wellcome To BagsQ</h1>
-            <Link to="/aboutus">About Us</Link>
+            <a href="#books">Featured Books</a>
           </Zoom>
         </div>
       </div>
