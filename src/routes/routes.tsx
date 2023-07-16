@@ -8,6 +8,7 @@ import BookList from '../components/books/BookList';
 import BookDetails from '../components/books/BookDetails';
 import AddNewBook from '../components/books/AddNewBook';
 import EditBook from '../components/books/EditBook';
+import PrivateRoute from './PrivateRoute';
 
 
 
@@ -33,11 +34,19 @@ const routes = createBrowserRouter([
       },
       {
         path: '/books/add-new',
-        element: <AddNewBook />,
+        element: (
+          <PrivateRoute>
+            <AddNewBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/books/:id/edit',
-        element: <EditBook />,
+        element: (
+          <PrivateRoute>
+            <EditBook />
+          </PrivateRoute>
+        ),
       },
       {
         path: '/checkout',

@@ -6,6 +6,7 @@ import Strength from '../components/Strength/Strength';
 import CountOurNumbers from '../components/CountOurNumbers/CountOurNumbers';
 import Benefits from '../components/Benefites/Benefits';
 import Footer from '../layouts/Footer';
+import HomeBook from '../components/HomeBook/HomeBook';
 const Home = () => {
     return (
         <div>
@@ -13,6 +14,7 @@ const Home = () => {
             <Banner/>
             <Faciliteis/>
             <CorporateClient/>
+            <HomeBook/>
             {/* product compo */}
             <Strength/>
             <CountOurNumbers/>

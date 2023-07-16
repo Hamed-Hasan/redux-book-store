@@ -41,7 +41,6 @@ export const createUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ email, password }: ICredential) => {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-call
     const data = await signInWithEmailAndPassword(auth, email, password);
 
     return data.user.email;

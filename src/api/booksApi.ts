@@ -27,28 +27,25 @@ export const booksApi = createApi({
     filterBooksByYear: builder.query<Book[], number>({
       query: (year) => `books?year=${year}`,
     }),
-
     addComment: builder.mutation({
       query: ({ bookId, comment }) => ({
         url: `/comment/${bookId}`,
         method: 'POST',
         body: { comment },
       }),
-      
       invalidatesTags: ['Comments'],
     }),
-    getComments: builder.query({
-      query: (bookId) => `/comment/${bookId}`, // Use 
+    getComments: builder.query<Comment[], string>({
+      query: (bookId) => `/comment/${bookId}`,
       cacheTime: 10000,
       providesTags: ['Comments'],
     }),
-
   }),
 });
 
 export const {
   useFetchBooksQuery,
-  useFetchBookByIdQuery, // Add the useFetchBookByIdQuery export
+  useFetchBookByIdQuery,
   useAddBookMutation,
   useSearchBooksQuery,
   useFilterBooksByGenreQuery,
