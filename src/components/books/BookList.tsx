@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import BookCard from './BookCard';
 import { getAllBooks } from '../../utils/api';
 import SearchBar from './SearchBar';
@@ -18,13 +18,13 @@ interface Book {
 const BookList = () => {
   const [books, setBooks] = useState<Book[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedGenre, setSelectedGenre] = useState('');
   const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true); // Added loading state
+  const [isLoading, setIsLoading] = useState(true);
 
   const itemsPerPage = 6;
-  const pageRange = 3; // Number of buttons to show in the middle
+  const pageRange = 3;
 
   useEffect(() => {
     fetchBooks();
@@ -32,23 +32,18 @@ const BookList = () => {
 
   useEffect(() => {
     filterBooks();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [books, selectedGenre, currentPage]);
-
-
 
   const fetchBooks = async () => {
     try {
-      setIsLoading(true); // Start loading
-
+      setIsLoading(true);
       const booksData = await getAllBooks();
       setBooks(booksData);
       setCurrentPage(1);
-
-      setIsLoading(false); // Stop loading
+      setIsLoading(false);
     } catch (error) {
       console.error('Error fetching books:', error);
-      setIsLoading(false); // Stop loading in case of error
+      setIsLoading(false);
     }
   };
 
@@ -71,8 +66,8 @@ const BookList = () => {
     setCurrentPage(1);
   };
 
-  const handlePrevPage = (event: { preventDefault: () => void; }) => {
-    event.preventDefault(); // Prevent navigation when the button is clicked
+  const handlePrevPage = (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    event.preventDefault();
     if (currentPage > 1) {
       setCurrentPage(currentPage - 1);
     }
@@ -105,31 +100,32 @@ const BookList = () => {
     const pageButtons = [];
     const startPage = Math.max(currentPage - pageRange, 1);
     const endPage = Math.min(currentPage + pageRange, totalPages);
-  
+
     for (let page = startPage; page <= endPage; page++) {
       pageButtons.push(
         <button
           key={page}
-          
           onClick={() => setCurrentPage(page)}
           className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-            page === currentPage ? 'bg-[#52ABE4] text-blue-100' : ''}` +
-            `${page === currentPage && page === startPage ? 'rounded-l-md' : ''}` +
-            `${page === currentPage && page === endPage ? 'rounded-r-md' : ''}`
-          }
+            page === currentPage ? 'bg-[#52ABE4] text-blue-100' : ''
+          }${
+            page === currentPage && page === startPage ? 'rounded-l-md' : ''
+          }${
+            page === currentPage && page === endPage ? 'rounded-r-md' : ''
+          }`}
         >
           {page}
         </button>
       );
     }
-  
+
     return pageButtons;
   };
-  
-  
-  if(isLoading){
-    return <Loading/>
+
+  if (isLoading) {
+    return <Loading />;
   }
+
   return (
     <div>
       <SearchBar onSearch={handleSearch} />
@@ -157,33 +153,29 @@ const BookList = () => {
         <nav aria-label="Page navigation example">
           <ul className="flex items-center justify-center -space-x-px">
             <li>
-           <button
-  className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-    currentPage === 1 ? 'cursor-not-allowed' : ''
-  }`}
-  onClick={handlePrevPage}
-  disabled={currentPage === 1}
->
-  Previous
-</button>
-
-            </li>
-            <li>
-              <button>
-              {getPageButtons()}
+              <button
+                className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 ml-0 rounded-l-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                  currentPage === 1 ? 'cursor-not-allowed' : ''
+                }`}
+                onClick={handlePrevPage}
+                disabled={currentPage === 1}
+              >
+                Previous
               </button>
             </li>
             <li>
-            <button
-            className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
-              currentPage === totalPages || totalPages === 0 ? 'cursor-not-allowed' : ''
-            }`}
-            onClick={handleNextPage}
-            disabled={currentPage === totalPages || totalPages === 0}
-          >
-            Next
-          </button>
-
+              <button>{getPageButtons()}</button>
+            </li>
+            <li>
+              <button
+                className={`bg-white border border-gray-300 text-gray-500 hover:bg-gray-100 hover:text-gray-700 rounded-r-lg leading-tight py-2 px-3 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white ${
+                  currentPage === totalPages || totalPages === 0 ? 'cursor-not-allowed' : ''
+                }`}
+                onClick={handleNextPage}
+                disabled={currentPage === totalPages || totalPages === 0}
+              >
+                Next
+              </button>
             </li>
           </ul>
         </nav>
