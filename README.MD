@@ -36,7 +36,7 @@ Book Store is a web application that allows users to browse and manage a collect
 - [Link to Git Repository](https://github.com/Hamed-Hasan/redux-book-store.git)
 
 ## Contact
-For any inquiries or feedback, please reach out to us at [email@example.com](swe.hamedhasan@gmail.com).
+For any inquiries or feedback, please reach out to us at [swe.hamedhasan@gmail.com](swe.hamedhasan@gmail.com).
 
 ## How to Run the Application
 Follow the steps below to run the application on your local machine:
