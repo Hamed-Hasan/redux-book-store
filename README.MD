@@ -1,5 +1,3 @@
-Sure! Here's an example of an advanced `README.md` file for your book store website:
-
 # Book Store
 
 ## Live Links
@@ -46,32 +44,12 @@ Follow the steps below to run the application on your local machine:
    git clone https://github.com/Hamed-Hasan/redux-book-store.git
    ```
 
-2. Navigate to the client directory:
-   ```shell
-   cd client
-   ```
-
-3. Install dependencies:
+2. Install dependencies:
    ```shell
    npm install
    ```
 
-4. Start the client application:
-   ```shell
-   npm start
-   ```
-
-5. Open another terminal and navigate to the server directory:
-   ```shell
-   cd ../server
-   ```
-
-6. Install server dependencies:
-   ```shell
-   npm install
-   ```
-
-7. Start the server:
+3. Start the client application:
    ```shell
    npm start
    ```
@@ -88,10 +66,5 @@ We welcome contributions from the community. If you'd like to contribute to the 
 5. Submit a pull request with a description of your changes
 
 We appreciate your valuable contributions!
-
-## License
-This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
----
 
 Feel free to customize the content according to your specific project requirements.
